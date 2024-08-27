@@ -1,12 +1,12 @@
 <script setup>
-import { useContactStore } from "@store/contactStore";
+import { useContactStore } from '@store/contactStore';
+import ContactItem from '@views/contact/components/ContactItem.vue';
+
 const store = useContactStore();
-function confirmDelete(id) {
-  const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce contact ?");
-  if (confirmation) {
-    store.remove(id);
-  }
-}
+
+const handleDeleteContact = (id) => {
+  store.remove(id);
+};
 </script>
 
 <template>
@@ -26,26 +26,26 @@ function confirmDelete(id) {
         </thead>
         <tbody>
           <tr v-if="store.contacts.length === 0">
-            <td colspan="4">No data</td>
+            <td colspan="5">No data</td>
           </tr>
           <tr v-for="item in store.contacts" :key="item.id">
-            <td scope="row">{{ `# ${item.id}` }}</td>
+            <td scope="row">{{ ` # ${item.id} ` }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.number }}</td>
             <td>{{ item.email }}</td>
             <td>
+              <!-- Bouton pour voir les détails du contact -->
               <button class="btn btn-sm btn-primary me-2">
                 <i class="fas fa-eye"></i>
               </button>
 
-              <router-link :to="{ name: 'contact-edit', params: { id: item.id } }"
-                class="btn btn-sm btn-secondary me-2">
+              <!-- Bouton pour éditer le contact -->
+              <button class="btn btn-sm btn-secondary me-2">
                 <i class="fas fa-edit"></i>
-              </router-link>
-
-              <button @click="store.remove(item.id)" class="btn btn-sm btn-outline-danger">
-                <i class="fas fa-trash"></i>
               </button>
+
+              <!-- Bouton pour supprimer le contact via le composant ContactItem -->
+              <ContactItem :contact="item" @deleteContact="handleDeleteContact" />
             </td>
           </tr>
         </tbody>
@@ -53,5 +53,3 @@ function confirmDelete(id) {
     </div>
   </div>
 </template>
-
-<style scoped></style>

@@ -1,9 +1,21 @@
 <script setup>
+const props = defineProps({
+  contact: Object,
+});
+
+const emit = defineEmits(['deleteContact']);
+
+const confirmDelete = () => {
+  if (window.confirm(`Are you sure you want to delete ${props.contact.name} ? `)) {
+    emit('deleteContact', props.contact.id);
+  }
+};
 </script>
 
 <template>
-  <h1>Contact Item Component</h1>
-</template>
 
-<style scoped>
-</style>
+  <button class="btn btn-sm btn-outline-danger" @click="confirmDelete">
+    <i class="fas fa-trash"></i>
+  </button>
+
+</template>
