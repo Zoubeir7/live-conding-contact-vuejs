@@ -7,17 +7,21 @@ const emit = defineEmits(["onEditForm"]);
 
 const route = useRoute();
 const router = useRouter()
+
 const contact = store.getContactById(route.params.id);
 
-const form = store.contactForm;
+console.log(`id is ${contact.id}`)
+// const form = store.contactForm;
 
 const editContact = () =>{
-  // if (form.name && form.number && form.email) {
-  //   store.edit(contact, form)
-  // } else {
-  //   console.log("Please fill all fields in form");
-  // }
-  router.push('/contact')
+  console.log(store.contactForm.name)
+  if (store.contactForm.name && store.contactForm.number && store.contactForm.email) {
+    console.log(route.params.id)
+    store.edit(route.params.id, store.contactForm)
+    router.push('/contact')
+  } else {
+    console.log("Please fill all fields in form");
+  }
 }
 </script>
 
@@ -25,7 +29,7 @@ const editContact = () =>{
   <div>
     <h1>Contact edit</h1>
     <div class="contact-add w-50 m-auto">
-      <ContactForm edit :contact="contact" @on-submit-form="editContact"/>
+      <ContactForm mode="edit" :contact="contact" @on-submit-edit-form="editContact"/>
     </div>
   </div>
 </template>

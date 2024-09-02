@@ -35,7 +35,7 @@ const handleDeleteContact = (id) => {
           </tr>
           <tr v-for="item in store.contacts" :key="item.id">
             <td scope="row">{{ `# ${item.id} ` }}</td>
-            <td>{{ item.name }}</td>
+            <td>{{ item.name }} {{ item.id }}</td>
             <td>{{ item.number }}</td>
             <td>{{ item.email }}</td>
             <td>
@@ -49,7 +49,7 @@ const handleDeleteContact = (id) => {
               </button>
 
               <router-link
-                :to="{ name: 'contact-edit', params: { id: item.id } }"
+                :to="`/contact/edit/${item.id}`"
                 class="btn btn-sm btn-secondary me-2">
                 <i class="fas fa-edit"></i>
               </router-link>
